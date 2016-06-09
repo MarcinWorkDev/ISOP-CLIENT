@@ -1,0 +1,109 @@
+<HTML>
+<HEAD>
+	<!-- META -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Formularz logowania</title>
+</HEAD>
+<BODY>
+
+	<style>
+		
+	</style>
+	
+	<div class="container" fragment="content">
+	
+	<hr>
+	
+	<div class="row">
+		<div id="loginForm" class="well col-md-8 col-md-offset-2">
+			<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMC8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvVFIvMjAwMS9SRUMtU1ZHLTIwMDEwOTA0L0RURC9zdmcxMC5kdGQnPjxzdmcgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMjQgMjQiIGlkPSJMYXllcl8xIiB2ZXJzaW9uPSIxLjAiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+PGNpcmNsZSBjeD0iMTIiIGN5PSI0IiByPSIyIi8+PHBvbHlsaW5lIGZpbGw9Im5vbmUiIHBvaW50cz0iMyw4IDEyLDggMjEsOCAiIHN0cm9rZT0iIzAwMDAwMCIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2Utd2lkdGg9IjIiLz48bGluZSBmaWxsPSJub25lIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLXdpZHRoPSIyIiB4MT0iMTAiIHgyPSIxMCIgeTE9IjciIHkyPSIyMiIvPjxyZWN0IGhlaWdodD0iNyIgd2lkdGg9IjYiIHg9IjkiIHk9IjgiLz48cGF0aCBkPSJNMTYuMywxNC45bC0xLjYtMS42bC0xLjQsMS40bDEuNSwxLjVjMC4xLDAuMSwwLjEsMC4zLTAuMSwwLjNMMTIsMTcuMnYyLjFsMy40LTAuOWMwLjgtMC4yLDEuNC0wLjksMS41LTEuNyAgQzE3LjEsMTYsMTYuOCwxNS40LDE2LjMsMTQuOXoiLz48L3N2Zz4=" style="float: right; width: 128px;">
+			<h3>Witaj w systemie <b>ISOP</b>!</h3>
+			<hr>
+			Podaj swój login lub numer PESEL oraz hasło aby zalogować się do systemu.
+		</div>
+	</div>
+	
+	<div class="row alert alert-danger col-md-6 col-md-offset-3" id="alertBox" style="display: none;"></div>
+	<div class="row alert alert-info col-md-6 col-md-offset-3" id="infoBox" style="display: none;"></div>
+	<div class="row alert alert-success col-md-6 col-md-offset-3" id="successBox" style="display: none;"></div>
+	
+	<div class="row">
+		<div id="loginForm" class="well col-md-4 col-md-offset-4">
+			<div class="form">
+				<div class="form-group">
+					<label for="username">Nazwa użytkownika lub numer PESEL</label>
+					<input type="text" class="form-control" id="usernameField" required>
+				</div>
+				<div class="form-group">
+					<label for="password">Hasło</label>
+					<input type="password" class="form-control" id="passwordField" required>
+				</div>
+				<button type="button" class="btn btn-primary" id="btnLogin">Zaloguj</button>
+			</div>
+		</div>
+	</div>
+		
+	<!-- Internal JS Code -->
+	<script type="text/javascript">
+							
+		$(document).ready(function(){
+	
+		});
+						
+		$('#btnLogin').on('click',function(){
+									
+			var button = $('#btnLogin');
+			var username = $('#usernameField');
+			var password = $('#passwordField');
+						
+			var alertBox = $('#alertBox');
+			var successBox = $('#successBox');
+						
+			if (username.val().length == 0 || password.val().length == 0){
+				alertBox.html('Podaj nazwę użytkownika oraz hasło!');
+				alertBox.show();
+				return;
+			} else {
+				alertBox.html('');
+				alertBox.hide();
+				button.attr('disabled','disabled');
+			}
+			
+			var data = {
+				username: username.val(),
+				password: password.val()
+			};
+			
+			$.ajax({
+				url: SOPIconfig.ajaxDomainUrl + 'auth',
+				method: 'POST',
+				data: JSON.stringify(data),
+				dataType: 'json',
+				contentType: "application/json; charset=utf-8",
+				success: function(result){
+					alertBox.html('').hide();
+					successBox.html('Sesja zalogowana poprawnie.').show();
+					sessionStorage.setItem('authtoken',result.token);
+					location.reload();
+				},
+				error: function(xhr, resp, text){
+					alertBox.hide('Wystąpił błąd.');
+					successBox.hide();
+					button.attr('disabled',false);
+				},
+				statusCode: {
+					401: function() {
+						alertBox.html('Podano błędną nazwę użytkownika lub hasło.').show();
+						successBox.hide();
+					}
+				}
+			});
+		});
+	
+	</script>
+	
+	</div>
+</BODY>
+</HTML>

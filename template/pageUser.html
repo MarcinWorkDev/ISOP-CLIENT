@@ -1,0 +1,170 @@
+<HTML>
+<HEAD>
+	<!-- META -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Użytkownicy</title>
+	<!-- CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+</HEAD>
+<BODY>
+
+	<div class="container" fragment="content">
+	
+	<!--------------------------------------------------------------------------------
+	-------  Header and filter (Auc - AddUserCollapse, Ulc - UserListContainer)
+	-------
+	-------	# AucButton, UlcFilterValue, UlcFilterReset 
+	--------------------------------------------------------------------------------->
+	<div>
+		<div class="alert alert-info" role="alert">
+			<b>Uwaga, </b>dane widoczne w tabeli filtowane są także na podstawie zawartości profilu użytkownika.
+		</div>	
+		<button id="AucButton" class="btn btn-success col-md-2" type="button" data-toggle="collapse" data-target="#Auc" aria-expanded="false" aria-controls="Auc">Nowy użytkownik</button>
+		<div class="input-group col-md-9 col-md-offset-3">
+			<input id="UlcFilterValue" type="text" class="form-control" placeholder="Szukana treść...">
+			<span class="input-group-btn">
+				<button id="UlcFilterReset" class="btn btn-danger" type="button">Wyczyść</button>
+			</span>
+		</div>
+	</div>
+		
+	<!--/////////////////////////////////////////////////-->
+	
+	<!--------------------------------------------------------------------------------
+	-------  AddUserCollapse (Auc)
+	-------  
+	------- # Auc, AucAlert, AucFilterValue, AucFilterReset
+	------- # AucContainer, AucContainerProfile, AucContainerUsernameGroup, AucContainerUsername, AucContainerButton
+	--------------------------------------------------------------------------------->
+	
+	<div class="collapse" id="Auc">
+	  <br>
+	  <div class="well">
+		<div class="alert alert-info" role="alert" id="AucAlert">
+			Wybierz profil dla którego chcesz utworzyć konto użytkownika.<br>
+			Na liście znajdują się tylko profile z podanym adresem email, które nie posiadają konta użytkownika.<br><br>
+			Hasło zostanie wygenerowane losowo i przesłane na podany w profilu adres email.<br><br>
+			Jeżeli wybrany został profil pacjenta nazwa użytkownika zostanie utworzona automatycznie.
+		</div>
+		<div class="input-group">
+			<input id="AucFilterValue" type="text" class="form-control" placeholder="Wyszukaj profil...">
+			<span class="input-group-btn">
+				<button id="AucFilterReset" class="btn btn-danger" type="button">Wyczyść</button>
+			</span>
+		</div>
+		<div id="AucContainer"></div>
+		<div class="form-group">
+				<label for="AucContainerProfile">Wybrany profil</label>
+				<input type="input" class="form-control" id="AucContainerProfile" profile name="profil" placeholder="Wybrany profil..." readonly>
+		</div>
+		<div class="form-group" id="AucContainerUsernameGroup">
+			<label for="AucContainerUsername">Nazwa użytkownika</label>
+			<input type="input" class="form-control" id="AucContainerUsername" name="usernameForm" placeholder="Nazwa użytkownika" required>
+		</div>
+		<button id="AucContainerButton" class="btn btn-success" disabled>Dodaj użytkownika</button>
+	  </div>
+	</div>
+	
+	<!--/////////////////////////////////////////////////-->
+	
+	<hr>
+	
+	<!--------------------------------------------------------------------------------
+	-------  UserListContainer (Ulc)
+	-------
+	------- # Ulc
+	--------------------------------------------------------------------------------->
+	
+	<div id="Ulc"></div>
+	
+	<!--/////////////////////////////////////////////////-->
+	
+	
+	<!--------------------------------------------------------------------------------
+	-------  RolesListModal (Rlm)
+	-------
+	------- # Rlm, RlmTitle, RlmContainer, RlmRolesList, RlmButton
+	--------------------------------------------------------------------------------->
+	
+	<div class="modal fade" tabindex="-1" role="dialog" id="Rlm">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="RlmTitle"></h4>
+		  </div>
+		  <div class="modal-body">
+			<div id="RlmContainer" userId=""></div>
+			<hr>
+			<div class="input-group">
+				<select class="form-control" id="RlmRolesList">
+					<option>1</option>
+				</select>
+				<span class="input-group-btn">
+					<button class="btn btn-primary" id="RlmButton">Dodaj uprawnienie</button>
+				</span>
+			</div>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+		  </div>
+		</div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
+	<!--/////////////////////////////////////////////////-->
+		
+	<!-- External JS Libraries -->
+	<script src="@{/resources/js/tabulator.js}" type="text/javascript"></script> 
+	<script src="@{/resources/js/common.js}" type="text/javascript"></script> 
+	<script src="@{/resources/js/PageScriptUser.js}" type="text/javascript"></script> 
+	
+	<!-- Internal JS Code -->
+	<script type="text/javascript">
+			
+		var config = {};
+			
+		config.global = {
+			domainUrl : '[[@{/}]]',
+			//domainUrl : 'http://localhost/sopi/', //'[[@{/}]]',
+			resourcesUrl : '[[@{/resources/}]]',
+			//resourcesUrl : '../../../resources/', //'[[@{/resources/}]]',
+			elementsUrl: '[[@{/resources/template/element/}]]',
+			//elementsUrl: 'http://localhost/sopi/resources/template/element/'
+		}		
+			
+		$(document).ready(function(){
+		
+			// Nadpisz wybrane ustawienia skryptu common
+			SOPI_resourcesUrl = config.global.resourcesUrl;
+			SOPI_elementsUrl = config.global.elementsUrl;
+			
+			// [BETA] Wczynie ProfileDetailModal
+			SOPI_loadElement('DeleteConfirmModal');
+			SOPI_loadElement('ProfileDetailModal');
+			SOPI_loadElement('StatusContainer');
+			SOPI_loadElement('StatusDetailModal');
+		
+			// Nadpisz konfigurację w skrypcie User
+			pageScriptUser.global = config.global;
+						
+			// Dodaj filtry do tabulatorów
+			SOPI_filterTabulator($('#Ulc'), $('#UlcFilterValue'), $('#UlcFilterReset'));
+			SOPI_filterTabulator($('#AucContainer'), $('#AucFilterValue'), $('#AucFilterReset'));
+			
+			// Uruchom skrypt User
+			pageScriptUser._create();
+			
+			// Załaduje dane do tabulatora User List
+			$('#Ulc').tabulator("setData");
+		
+		});
+	
+	</script>
+	
+	</div>
+</BODY>
+</HTML>

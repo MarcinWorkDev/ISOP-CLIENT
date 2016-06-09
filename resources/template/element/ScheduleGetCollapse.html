@@ -1,0 +1,43 @@
+<!--------------------------------------------------------------------------------
+-------  ScheduleGetCollapse (Sgc)
+-------
+------- # Sgc, SgcCalendar, SgcCalendarLoader
+--------------------------------------------------------------------------------->
+
+	<style>
+		.schedule-avail {
+			border: 1px solid green;
+			background: green;
+			cursor: pointer;
+		}
+		.schedule-unavail {
+			border: 1px solid grey;
+			background: grey;
+		}
+		.schedule-unavail-b {
+			border: 1px solid grey;
+			background: grey;
+		}
+	</style>
+
+	<div class="collapse" id="Sgc">
+	  <br>
+	  <div class="well" style="min-height: 300px;">
+		<div class="alert alert-info">
+			Wybierz dostępny (oznaczony na zielono) termin, aby zarezerwować wizytę.			
+		</div>
+		<div class="row">
+			<div id="SgcCalendarLoader" class="col-md-10 col-md-offset-1">
+				<div class="progress">
+					<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%" id="SgcCalendarLoaderStatus">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div id="SgcCalendar"></div>
+		</div>
+	  </div>
+	</div>
+
+<!--/////////////////////////////////////////////////-->

@@ -1,0 +1,169 @@
+<HTML>
+<HEAD>
+	<!-- META -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Wizyty</title>
+	<!-- CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Zebra_datepicker/1.9.4/css/metallic.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.1/fullcalendar.css">
+</HEAD>
+<BODY>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<!--<script src="../../../resources/js/bootstrap.min.js"></script>-->
+	
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/2.7.2/jquery.serializejson.min.js" type="text/javascript"></script> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Zebra_datepicker/1.9.4/javascript/zebra_datepicker.js" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/smokejs/3.1.1/js/smoke.min.js" type="text/javascript"></script>
+	<script src="../../../resources/js/smokeValidator_PL.js" type="text/javascript"></script>
+	<script src="../../../resources/lib/ckeditor/ckeditor.js" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment-with-locales.min.js"></script>
+
+	<div class="container" fragment="content">
+	
+	<!--------------------------------------------------------------------------------
+	-------  Header and filter
+	-------
+	-------	# 
+	--------------------------------------------------------------------------------->
+	<div>
+		<div class="alert alert-info" role="alert">
+			<b>Uwaga, </b>dane widoczne w tabeli filtowane są także na podstawie zawartości profilu.
+		</div>	
+		<button id="SgcButton" class="btn btn-success col-md-2" type="button">Nowa wizyta</button>
+		<div class="input-group col-md-9 col-md-offset-3">
+			<input id="VlcFilterValue" type="text" class="form-control" placeholder="Szukana treść...">
+			<span class="input-group-btn">
+				<button id="VlcFilterReset" class="btn btn-danger" type="button">Wyczyść</button>
+			</span>
+		</div>
+	</div>
+		
+	<!--/////////////////////////////////////////////////-->
+		
+	<hr>
+	
+	<!--------------------------------------------------------------------------------
+	-------  ScheduleGetCollapse (Sgc)
+	-------
+	------- # Sgc
+	--------------------------------------------------------------------------------->
+	
+	<div id="SOPI_ScheduleGetCollapse"></div>
+	
+	<!--/////////////////////////////////////////////////-->
+	
+	<!--------------------------------------------------------------------------------
+	-------  VisitListContainer (Vlc)
+	-------
+	------- # Vlc
+	--------------------------------------------------------------------------------->
+	
+	<div id="Vlc"></div>
+	
+	<!--/////////////////////////////////////////////////-->
+	
+	
+	<!--------------------------------------------------------------------------------
+	-------  RolesListModal (Rlm)
+	-------
+	------- # Rlm, RlmTitle, RlmContainer, RlmRolesList, RlmButton
+	--------------------------------------------------------------------------------->
+	
+	<div class="modal fade" tabindex="-1" role="dialog" id="Rlm">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="RlmTitle"></h4>
+		  </div>
+		  <div class="modal-body">
+			<div id="RlmContainer" userId=""></div>
+			<hr>
+			<div class="input-group">
+				<select class="form-control" id="RlmRolesList">
+					<option>1</option>
+				</select>
+				<span class="input-group-btn">
+					<button class="btn btn-primary" id="RlmButton">Dodaj uprawnienie</button>
+				</span>
+			</div>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+		  </div>
+		</div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
+	<!--/////////////////////////////////////////////////-->
+		
+	<!-- External JS Libraries -->
+	<script src="@{/resources/js/tabulator.js}" type="text/javascript"></script> 
+	<script src="@{/resources/js/common.js}" type="text/javascript"></script> 
+	<script src="@{/resources/js/PageScriptVisit.js}" type="text/javascript"></script> 
+	
+	<!-- --
+	<script src="../../../resources/js/tabulator.js" type="text/javascript"></script> 
+	<script src="../../../resources/js/common.js" type="text/javascript"></script> 
+	<script src="../../../resources/js/PageScriptVisit.js" type="text/javascript"></script> 
+	<script src="../../../resources/js/fullcalendar.js"></script>
+	<script src="../../../resources/js/fullcalendar_pl.js"></script>
+	<!-- -->
+	
+	<!-- Internal JS Code -->
+	<script type="text/javascript">
+			
+		var config = {};
+			
+		config.global = {
+			domainUrl : '[[@{/}]]',
+			//domainUrl : 'http://localhost/sopi/', //'[[@{/}]]',
+			resourcesUrl : '[[@{/resources/}]]',
+			//resourcesUrl : '../../../resources/', //'[[@{/resources/}]]',
+			elementsUrl: '[[@{/resources/template/element/}]]',
+			//elementsUrl: '../../../resources/template/element/'
+		}		
+			
+		$(document).ready(function(){
+		
+			// Nadpisz wybrane ustawienia skryptu common
+			SOPI_resourcesUrl = config.global.resourcesUrl;
+			SOPI_elementsUrl = config.global.elementsUrl;
+			
+			// [BETA] Wczynie ProfileDetailModal
+			SOPI_loadElement('DeleteConfirmModal');
+			SOPI_loadElement('ProfileDetailModal');
+			SOPI_loadElement('StatusContainer');
+			SOPI_loadElement('StatusDetailModal');
+			SOPI_loadElement('VisitDetailModal');
+			SOPI_loadElement('ScheduleGetCollapse');
+			SOPI_loadElement('ProfileGetModal');
+		
+			// Nadpisz konfigurację w skrypcie User
+			pageScriptUser.global = config.global;
+						
+			// Dodaj filtry do tabulatorów
+			SOPI_filterTabulator($('#Vlc'), $('#VlcFilterValue'), $('#VlcFilterReset'));
+			SOPI_filterTabulator($('#PgmContainer'), $('#PgmFilterValue'), $('#PgmFilterReset'));
+			
+			// Uruchom skrypt User
+			pageScriptUser._create();
+			
+			// Załaduje dane do tabulatora User List
+			$('#Vlc').tabulator("setData");
+		
+		});
+	
+	</script>
+	
+	</div>
+</BODY>
+</HTML>

@@ -1,0 +1,78 @@
+<!--------------------------------------------------------------------------------
+-------  ProfileDetailModal (Pdm)
+-------
+------- # Pdm, PdmTitle, PdmBody
+--------------------------------------------------------------------------------->
+
+<div class="modal fade" tabindex="-1" role="dialog" id="Pdm">
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<h4 class="modal-title" id="PdmTitle"></h4>
+	  </div>
+	  <div class="modal-body" id="PdmBody">
+	  
+		<table class="table table-bordered table-condensed">
+			<tr><td class="PdmDataRow" pdm-field="avatar"></td></tr>
+			<tr>
+				<td>
+					<b class="PdmDataRow" pdm-field="nazwisko"></b> 
+					<b class="PdmDataRow" pdm-field="imie"></b>
+				</td>
+			</tr>
+		</table>
+		<hr>
+		<table class="table table-bordered table-hover table-condensed">
+			<tbody>
+				<tr><td style="width: 200px;">Typ profilu</td><th class="PdmDataRow" pdm-field="type"></td></tr>
+				<tr><td style="width: 200px;">Pesel</td><th class="PdmDataRow" pdm-field="pesel"></td></tr>
+				<tr><td style="width: 200px;">Data urodzenia</td><th class="PdmDataRow" pdm-field="dataUrodzenia"></td></tr>
+				<tr><td style="width: 200px;">Płeć</td><th class="PdmDataRow" pdm-field="plecName"></td></tr>
+			</tbody>
+		</table>
+		<hr>
+		<table class="table table-bordered table-hover table-condensed">
+			<thead>
+				<tr><th colspan="2">Dane adresowe</td></tr>
+			</thead>
+			<tbody>
+				<tr><td style="width: 200px;">Ulica</td><th class="PdmDataRow" pdm-field="ulica"></td></tr>
+				<tr><td style="width: 200px;">Numer domu</td><th class="PdmDataRow" pdm-field="nrDomu"></td></tr>
+				<tr><td style="width: 200px;">Numer mieszkania</td><th class="PdmDataRow" pdm-field="nrMieszkania"></td></tr>
+				<tr><td style="width: 200px;">Kod pocztowy</td><th class="PdmDataRow" pdm-field="kodPocztowy"></td></tr>
+				<tr><td style="width: 200px;">Miejscowość</td><th class="PdmDataRow" pdm-field="miejscowosc"></td></tr>
+			</tbody>
+		</table>
+		<hr>
+		<table class="table table-bordered table-hover table-condensed">
+			<thead>
+				<tr><th colspan="2">Dane kontaktowe</td></tr>
+			</thead>
+			<tbody>
+				<tr><td style="width: 200px;">Telefon komórkowy</td><th class="PdmDataRow" pdm-field="mobile"></td></tr>
+				<tr><td style="width: 200px;">Telefon dodatkowy</td><th class="PdmDataRow" pdm-field="numerDodatkowy"></td></tr>
+				<tr><td style="width: 200px;">Adres email</td><th class="PdmDataRow" pdm-field="email"></td></tr>
+			</tbody>
+		</table>
+		<hr>
+		<table class="table table-bordered table-hover table-condensed">
+			<thead>
+				<tr><th colspan="2">Rejestracja w systemie</td></tr>
+			</thead>
+			<tbody>
+				<tr><td style="width: 200px;">Data rejestracji</td><th class="PdmDataRow" pdm-field="createdAt"></td></tr>
+				<tr><td style="width: 200px;">Użytkownik rejestrujący</td><th class="PdmDataRow" pdm-field="createdBy"></td></tr>
+			</tbody>
+		</table>
+	  
+		<span class="PdmDataRow" pdm-field="userStatus"></span>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+	  </div>
+	</div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!--/////////////////////////////////////////////////-->

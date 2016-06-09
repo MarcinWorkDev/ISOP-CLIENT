@@ -1,0 +1,245 @@
+<HTML>
+<HEAD>
+	<!-- META -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Użytkownicy</title>
+	<!-- CSS -->
+</HEAD>
+<BODY>
+
+	<div class="container" fragment="content">
+	
+	<!--------------------------------------------------------------------------------
+	-------  Header and filter (Apc - AddProfileCollapse, Plc - ProfileListContainer)
+	-------
+	-------	# ApcButton, PlcFilterValue, PlcFilterReset 
+	--------------------------------------------------------------------------------->
+	<div>
+		<div class="alert alert-info" role="alert">
+			<b>Uwaga, </b>dane widoczne w tabeli filtowane są także na podstawie danych niewidocznych bezpośrednio w tabeli (np. adres).
+		</div>	
+		<button id="ApcButton" class="btn btn-success col-md-2" type="button" aria-expanded="false" aria-controls="Apc">Nowy profil</button>
+		<div class="input-group col-md-9 col-md-offset-3">
+			<input id="PlcFilterValue" type="text" class="form-control" placeholder="Szukana treść...">
+			<span class="input-group-btn">
+				<button id="PlcFilterReset" class="btn btn-danger" type="button">Wyczyść</button>
+			</span>
+		</div>
+	</div>
+		
+	<!--/////////////////////////////////////////////////-->
+		
+	<!--------------------------------------------------------------------------------
+	-------  AddProfileCollapse (Apc)
+	-------  
+	------- # Apc, ApcAlert, ApcForm, ApcFormButton
+	--------------------------------------------------------------------------------->
+	
+	<div class="collapse" id="Apc">
+	  <br>
+	  <div class="well">
+		<div class="alert alert-info" role="alert" id="ApcInfoNew">
+			Aby dodać nowy profil wypełnij poniższy formularz.
+		</div>	
+		<div class="alert alert-info" role="alert" style="display: none;" id="ApcInfoEdit">
+			Użyj poniższego formularza aby zaktualizować profil.
+		</div>
+		<div class="alert alert-danger" role="alert" id="ApcAlert" style="display: none;">
+		</div>		
+		<form id="ApcForm" class="" style="max-width: 800px;" role="form">	
+			<hr>
+			<div class="form-group row">
+				<label for="ApcForm-" class="col-sm-2 control-label col-sm-offset-2">Typ profilu*</label>
+				<div class="btn-group" data-toggle="buttons">
+					<label class='btn btn-default active'>
+						<input type="radio" name="type" value="PACJENT" autocomplete="off" checked="checked"> PACJENT
+					</label>
+					<label class='btn btn-default'>
+						<input type="radio" name="type" value="PRACOWNIK" autocomplete="off" checked="false"> PRACOWNIK
+					</label>
+					<label class='btn btn-default'>
+						<input type="radio" name="type" value="USER" autocomplete="off" checked="false"> USER
+					</label>
+				</div>
+			</div>
+			<hr><div class="row"><h3 class="col-sm-11 col-sm-offset-1">Dane personalne</h3></div><hr>
+			<div class="row">
+				<div class="form-group col-sm-6 row col-sm-offset-1">
+					<label for="ApcForm-" class="control-label">Nazwisko*</label>
+					<div class="">
+						<input type="text" class="form-control" name="nazwisko" id="ApcForm-" placeholder="Nazwisko" required>
+						<div class="help-block with-errors"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-sm-6 row col-sm-offset-1">
+					<label for="ApcForm-" class="control-label">Imię*</label>
+						<input type="text" class="form-control" name="imie" id="ApcForm-" placeholder="Imię" required>
+						<div class="help-block with-errors"></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-sm-4 row col-sm-offset-1">
+					<label for="ApcForm-" class="control-label">Pesel*</label>
+					<div class="">
+						<input type="number" class="form-control" data-pesel="pesel" name="pesel" data-smk-pattern="[0-9]{11}" data-smk-msg="Podany numer pesel nie jest prawidłowy" id="ApcForm-" placeholder="Pesel" required>
+						<div class="help-block with-errors"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-sm-4 row col-sm-offset-1">
+					<label for="ApcForm-" class="control-label">Data urodzenia</label>
+					<div class="">
+						<input type="date2" class="form-control" name="dataUrodzenia" id="ApcForm-" placeholder="Data urodzenia" data-zdp_direction="-1" required>
+						<div class="help-block with-errors"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-sm-6 row col-sm-offset-1">
+					<label for="ApcForm-" class="control-label">Płeć*</label>
+					<div class="">
+						<div class="btn-group" data-toggle="buttons">
+							<label class='btn btn-default active'>
+								<input type="radio" name="plec" value="M" autocomplete="off" checked="checked"> Mężczyzna
+							</label>
+							<label class='btn btn-default'>
+								<input type="radio" name="plec" value="F" autocomplete="off" checked="false"> Kobieta
+							</label>
+							<label class='btn btn-default'>
+								<input type="radio" name="plec" value="U" autocomplete="off" checked="false"> Nieznana
+							</label>
+						</div>
+					</div>
+					<div class="help-block with-errors"></div>
+				</div>
+			</div>
+			<hr><div class="row"><h3 class="col-sm-11 col-sm-offset-1">Dane adresowe</h3></div><hr>
+			<div class="row">
+				<div class="form-group col-sm-10 col-sm-offset-1 row">
+					<label for="ApcForm-">Ulica</label>
+					<div>
+						<input type="text" class="form-control" id="ApcForm-" name="ulica" placeholder="Ulica">
+						<div class="help-block with-errors"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row col-sm-offset-1">
+				<div class="form-group col-sm-4 row">
+					<label for="ApcForm-">Nr domu</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="ApcForm-" name="nrDomu" placeholder="Nr domu">
+						<div class="help-block with-errors"></div>
+					</div>
+				</div>
+				<div class="form-group col-sm-4 row">
+					<label for="ApcForm-">Nr mieszkania</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="ApcForm-" name="nrMieszkania" placeholder="Nr mieszkania">
+						<div class="help-block with-errors"></div>
+					</div>
+				</div>
+				<div class="form-group col-sm-4 row">
+					<label for="ApcForm-">Kod pocztowy</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="ApcForm-" data-smk-pattern="[0-9]{2}-[0-9]{3}" data-smk-msg="Podany kod pocztowy nie jest prawidłowy" name="kodPocztowy" placeholder="Kod pocztowy">
+						<div class="help-block with-errors"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-sm-10 col-sm-offset-1 row">
+					<label for="ApcForm-">Miejscowość</label>
+					<div>
+						<input type="text" class="form-control" id="ApcForm-" name="miejscowosc" placeholder="Miejscowość">
+						<div class="help-block with-errors"></div>
+					</div>
+				</div>
+			</div>
+			<hr><div class="row"><h3 class="col-sm-11 col-sm-offset-1">Dane kontaktowe</h3></div><hr>
+			<div class="row">
+				<div class="form-group col-sm-10 col-sm-offset-1 row">
+					<label for="ApcForm-">Adres email</label>
+					<div>
+						<input type="email" class="form-control" id="ApcForm-" name="email" placeholder="Adres email">
+						<div class="help-block with-errors"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row col-sm-offset-1">
+				<div class="form-group col-sm-6 row">
+					<label for="ApcForm-">Telefon komórkowy</label>
+					<div class="col-sm-10">
+						<input type="number" class="form-control" id="ApcForm-" name="mobile" data-smk-pattern="[1-9]{1}[0-9]{8}" data-smk-msg="<br><br>Podany numer telefonu nie jest prawidłowy (9 cyfr)" placeholder="Telefon komórkowy">
+						<div class="help-block with-errors smk-error-msg"></div>
+					</div>
+				</div>
+				<div class="form-group col-sm-6 row">
+					<label for="ApcForm-">Telefon dodatkowy</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="ApcForm-" name="numerDodatkowy" placeholder="Telefon dodatkowy">
+						<div class="help-block with-errors"></div>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="form-group row">
+				<a role="button" class="btn btn-success col-sm-2 col-sm-offset-1" profileId="false" id="ApcFormButton">Dodaj profil</a>
+			</div>
+		</form>
+	  </div>
+	</div>
+	
+	<!--/////////////////////////////////////////////////-->
+	
+	<hr>
+	
+	<!--------------------------------------------------------------------------------
+	-------  ProfileListContainer (Plc)
+	-------
+	------- # Plc
+	--------------------------------------------------------------------------------->
+	
+	<div id="Plc"></div>
+	
+	<!--/////////////////////////////////////////////////-->
+			
+	<!-- External JS Libraries -->
+	<script src="resources/js/PageScriptProfile.js" type="text/javascript"></script> 
+	
+	<!-- Internal JS Code -->
+	<script type="text/javascript">
+						
+		$(document).ready(function(){
+		
+			$('title').html('Profile');
+					
+			// [BETA] Wczynie ProfileDetailModal
+			SOPI_loadElement('DeleteConfirmModal');
+			SOPI_loadElement('ProfileDetailModal');
+			SOPI_loadElement('StatusContainer');
+			SOPI_loadElement('StatusDetailModal');
+						
+			// Dodaj filtry do tabulatorów
+			SOPI_filterTabulator($('#Plc'), $('#PlcFilterValue'), $('#PlcFilterReset'));
+			
+			// Uruchom skrypt Profile
+			pageScriptProfile._create();
+			
+			// Dodanie kalendarza do przycisków input=date2
+			SOPI_inputDateCalendar();
+						
+			// Załaduje dane do tabulatora User List
+			$('#Plc').tabulator("setData");
+		
+		});
+	
+	</script>
+	
+	</div>
+</BODY>
+</HTML>

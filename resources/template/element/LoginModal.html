@@ -1,0 +1,90 @@
+<!--------------------------------------------------------------------------------
+-------
+-------
+------- 
+--------------------------------------------------------------------------------->
+
+<div class="modal fade" tabindex="-1" role="dialog" id="SOPI_loginModal">
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<h4 class="modal-title">Wznowienie sesji</h4>
+	  </div>
+	  <div class="modal-body">
+	<div class="alert alert-warning">
+		Twoja sesja wygasła.<br><br>
+		Aby kontynuować podaj swoje hasło i ponownie zatwierdź wprowadzone zmiany.
+	</div>
+	
+	<div class="alert alert-danger" id="SOPI_loginModalError">
+		Wprowadzone hasło jest błędne!
+	</div>
+	
+	<div class="">
+		<div>
+			<div class="form">
+				<div class="form-group">
+					<label for="passwordModal">Hasło</label>
+					<input type="password" class="form-control" id="passwordModalField" required>
+				</div>
+			</div>
+		</div>
+	</div>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-success" id="SOPI_loginModalButton">Zaloguj</button>
+		<button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+	  </div>
+	</div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+	$('#SOPI_loginModalButton').on('click',function(){
+		var button = $(this);
+		var username = SOPI_userInfo.username;
+		var password = $('#passwordModalField');
+					
+		var alertBox = $('#SOPI_loginModalError');
+					
+		if (password.val().length == 0){
+			alertBox.html('Podaj hasło!');
+			alertBox.show();
+			return;
+		} else {
+			alertBox.html('');
+			alertBox.hide();
+			button.attr('disabled','disabled');
+		}
+		
+		var data = {
+			username: username,
+			password: password.val()
+		};
+		
+		$.ajax({
+			url: SOPIconfig.ajaxDomainUrl + 'auth',
+			method: 'POST',
+			data: JSON.stringify(data),
+			dataType: 'json',
+			contentType: "application/json; charset=utf-8",
+			success: function(result){
+				alertBox.html('').hide();
+				sessionStorage.setItem('authtoken',result.token);
+				$('#SOPI_loginModal').hide();
+			},
+			error: function(xhr, resp, text){
+				alertBox.html('Wystąpił błąd.').show();
+				button.attr('disabled',false);
+			},
+			statusCode: {
+				401: function() {
+					alertBox.html('Podano błędne hasło.').show();
+				}
+			}
+		});
+	});
+</script>
+
+<!--/////////////////////////////////////////////////-->

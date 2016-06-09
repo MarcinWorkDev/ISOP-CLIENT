@@ -1,0 +1,129 @@
+<HTML>
+<HEAD>
+	<!-- META -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Haronogram pracy</title>
+	<!-- CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Zebra_datepicker/1.9.4/css/metallic.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.1/fullcalendar.css">
+</HEAD>
+<BODY>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<!--<script src="../../../resources/js/bootstrap.min.js"></script>-->
+	
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/2.7.2/jquery.serializejson.min.js" type="text/javascript"></script> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Zebra_datepicker/1.9.4/javascript/zebra_datepicker.js" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/smokejs/3.1.1/js/smoke.min.js" type="text/javascript"></script>
+	<script src="../../../resources/js/smokeValidator_PL.js" type="text/javascript"></script>
+	<script src="../../../resources/js/ckeditor.js" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment-with-locales.min.js"></script>
+	
+	<style>
+		
+	</style>
+	
+	<div class="container" fragment="content">
+	
+	<!--------------------------------------------------------------------------------
+	-------  Header and filter (Asc - AddScheduleCollapse, Plc - ProfileListContainer)
+	-------
+	-------	# AscButton, PlcFilterValue, PlcFilterReset 
+	--------------------------------------------------------------------------------->
+	<div>
+		<div class="alert alert-info" role="alert">
+			<b>Uwaga, </b>dane widoczne w tabeli filtowane są także na podstawie danych niewidocznych bezpośrednio w tabeli (np. adres).
+		</div>	
+		<div class="input-group col-md-9 col-md-offset-3">
+			<input id="PlcFilterValue" type="text" class="form-control" placeholder="Szukana treść...">
+			<span class="input-group-btn">
+				<button id="PlcFilterReset" class="btn btn-danger" type="button">Wyczyść</button>
+			</span>
+		</div>
+	</div>
+		
+	<!--/////////////////////////////////////////////////-->
+			
+	<hr>
+	
+	<!--------------------------------------------------------------------------------
+	-------  ScheduleListContainer (Plc)
+	-------
+	------- # Slc
+	--------------------------------------------------------------------------------->
+	
+	<div id="Slc"></div>
+	
+	<!--/////////////////////////////////////////////////-->
+	
+	<div id="SOPI_ScheduleCalendarCollapse"></div>
+
+		
+	<!-- External JS Libraries -->
+	<script src="@{/resources/js/tabulator.js}" type="text/javascript"></script> 
+	<script src="@{/resources/js/common.js}" type="text/javascript"></script> 
+	<script src="@{/resources/js/PageScriptSchedule.js}" type="text/javascript"></script> 
+	
+	<!-- --
+	<script src="../../../resources/js/tabulator.js" type="text/javascript"></script> 
+	<script src="../../../resources/js/common.js" type="text/javascript"></script> 
+	<script src="../../../resources/js/PageScriptSchedule.js" type="text/javascript"></script> 
+	
+	<!-- -->
+	
+	<!-- Internal JS Code -->
+	<script type="text/javascript">
+			
+		var config = {};
+			
+		config.global = {
+			domainUrl : '@{/}',
+			//domainUrl : 'http://localhost/sopi/', //'@{/}',
+			resourcesUrl : '@{/resources/}',
+			//resourcesUrl : '../../../resources/', //'@{/resources/}',
+			elementsUrl: '@{/resources/template/element/}',
+			//elementsUrl: '../../../resources/template/element/'
+		}
+				
+		$(document).ready(function(){
+		
+			// Nadpisz wybrane ustawienia skryptu common
+			SOPI_resourcesUrl = config.global.resourcesUrl;
+			SOPI_elementsUrl = config.global.elementsUrl;
+			
+			// [BETA] Wczynie ProfileDetailModal
+			SOPI_loadElement('ProfileDetailModal');		
+			SOPI_loadElement('StatusContainer');
+			SOPI_loadElement('StatusDetailModal');	
+			SOPI_loadElement('ScheduleCalendarCollapse');
+			SOPI_loadElement('ScheduleDetailModal');
+
+			// Nadpisz konfigurację w skrypcie Profile
+			pageScriptSchedule.global = config.global;
+									
+			// Dodaj filtry do tabulatorów
+			SOPI_filterTabulator($('#Slc'), $('#SlcFilterValue'), $('#SlcFilterReset'));
+			
+			// Uruchom skrypt Profile
+			pageScriptSchedule._create();
+					
+			// Dodanie kalendarza do przycisków input=date2
+			SOPI_inputDateCalendar();
+			
+			// Załaduje dane do tabulatora User List
+			$('#Slc').tabulator("setData");
+		
+		});
+	
+	</script>
+	
+	</div>
+</BODY>
+</HTML>
