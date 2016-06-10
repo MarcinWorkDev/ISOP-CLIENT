@@ -3,42 +3,27 @@ var pageScriptUser = {
 	/******************************************************
 	/	Deklaracje	zmiennych
 	/*****************************************************/
-	
-	// zmienne globalne
-	global: {
-		domainUrl: '',
-		resourcesUrl: '',
-		elementsUrl: ''
-	},
 		
 	// wygenerowanie adresów obrazków
-	icons: function(){
-		
-		var global = this.global;
-				
-		var icons = {
-			avatarMaleIcon: '<img src="' + global.resourcesUrl + 'img/avatar_male.png" style="width: 20px;">',
-			avatarFemaleIcon:  '<img src="' + global.resourcesUrl + 'img/avatar_female.png" style="width: 20px;">',
-			avatarOtherIcon:  '<img src="' + global.resourcesUrl + 'img/avatar_other.png" style="width: 20px;">',
-			avatarMale: '<img src="' + global.resourcesUrl + 'img/avatarMale.png" style="width: 128px;">',
-			avatarFemale:  '<img src="' + global.resourcesUrl + 'img/avatarFemale.png" style="width: 128px;">',
-			avatarOther:  '<img src="' + global.resourcesUrl + 'img/avatarOther.png" style="width: 128px;">',
-			rolesIcon:  '<img src="' + global.resourcesUrl + 'img/roles.png" style="width: 20px;">',
-			activeIcon:  '<img src="' + global.resourcesUrl + 'img/active.png" style="width: 18;">',
-			deleteIcon:  '<img src="' + global.resourcesUrl + 'img/delete.png" style="width: 20;">',
-			userIcon:  '<img src="' + global.resourcesUrl + 'img/web_account.png" style="width: 20;">',
-		};
-		return icons;
+	icons: {
+		avatarMaleIcon: '<img src="' + SOPIconfig.resourcesUrl + 'img/avatar_male.png" style="width: 20px;">',
+		avatarFemaleIcon:  '<img src="' + SOPIconfig.resourcesUrl + 'img/avatar_female.png" style="width: 20px;">',
+		avatarOtherIcon:  '<img src="' + SOPIconfig.resourcesUrl + 'img/avatar_other.png" style="width: 20px;">',
+		avatarMale: '<img src="' + SOPIconfig.resourcesUrl + 'img/avatarMale.png" style="width: 128px;">',
+		avatarFemale:  '<img src="' + SOPIconfig.resourcesUrl + 'img/avatarFemale.png" style="width: 128px;">',
+		avatarOther:  '<img src="' + SOPIconfig.resourcesUrl + 'img/avatarOther.png" style="width: 128px;">',
+		rolesIcon:  '<img src="' + SOPIconfig.resourcesUrl + 'img/roles.png" style="width: 20px;">',
+		activeIcon:  '<img src="' + SOPIconfig.resourcesUrl + 'img/active.png" style="width: 18;">',
+		deleteIcon:  '<img src="' + SOPIconfig.resourcesUrl + 'img/delete.png" style="width: 20;">',
+		userIcon:  '<img src="' + SOPIconfig.resourcesUrl + 'img/web_account.png" style="width: 20;">',
 	},
 		
 	// konstruktor
 	_create: function(){
 				
 		console.log('SOPI PageScript for Visit page loaded.');
-		
-		var self = this;
-		var global = self.global;
-		var icons = self.icons();
+
+		var icons = this.icons;
 		
 		/******************************************************
 		/	Funkcje obsługi onClick - dodanie eventów
@@ -58,7 +43,7 @@ var pageScriptUser = {
 			var data = {visitId: visitId, status: status, result: result};
 			
 			SOPI_ajaxJson({
-				url: global.domainUrl + 'api/module/visit/setResult',
+				url: SOPIconfig.ajaxDomainUrl + 'api/module/visit/setResult',
 				method: 'PUT',
 				data: JSON.stringify(data),
 				contentType: "application/json; charset=utf-8",
@@ -79,7 +64,7 @@ var pageScriptUser = {
 			$('#Dcm').modal('toggle');
 						
 			SOPI_ajaxJson({
-				url: global.domainUrl + 'api/module/visit/cancel/' + visitId,
+				url: SOPIconfig.ajaxDomainUrl + 'api/module/visit/cancel/' + visitId,
 				method: 'PUT',
 				contentType: "application/json; charset=utf-8",
 				record: visitId,
@@ -102,7 +87,7 @@ var pageScriptUser = {
 			};
 						
 			SOPI_ajaxJson({
-				url: global.domainUrl + 'api/module/visit/set',
+				url: SOPIconfig.ajaxDomainUrl + 'api/module/visit/set',
 				method: 'POST',
 				data: JSON.stringify(data),
 				contentType: "application/json; charset=utf-8",
@@ -122,7 +107,8 @@ var pageScriptUser = {
 		/*****************************************************/
 						
 		$('#PgmContainer').tabulator({
-			ajaxURL: global.domainUrl + 'api/module/profile/getPacjent',
+			ajaxURL: SOPIconfig.ajaxDomainUrl + 'api/module/profile/getPacjent',
+			ajaxHeaders: { "X-Auth-Token": sessionStorage.getItem('authtoken') },
 			index: 'profileId',
 			fitColumns: true,
 			sortable: false,
@@ -152,7 +138,8 @@ var pageScriptUser = {
 						
 		// Tabulator użytkowników
 		$('#Vlc').tabulator({
-		ajaxURL: global.domainUrl + 'api/module/visit/get',
+		ajaxURL: SOPIconfig.ajaxDomainUrl + 'api/module/visit/get',
+		ajaxHeaders: { "X-Auth-Token": sessionStorage.getItem('authtoken') },
 		index: 'visitId',
 		fitColumns:true,
 		pagination: true,
@@ -376,7 +363,7 @@ var pageScriptUser = {
 				}
 			},
 			editable: false,
-			events: global.domainUrl + 'api/module/schedule/event/get',
+			events: SOPIconfig.ajaxDomainUrl + 'api/module/schedule/event/get',
 			timezone: 'UTC',
 			defaultView: 'agendaWeek',
 			columnFormat: 'dd, D MMMM',

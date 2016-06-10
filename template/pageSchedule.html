@@ -2,33 +2,8 @@
 <HEAD>
 	<!-- META -->
 	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Haronogram pracy</title>
-	<!-- CSS -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Zebra_datepicker/1.9.4/css/metallic.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.6.1/fullcalendar.css">
 </HEAD>
 <BODY>
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	<!--<script src="../../../resources/js/bootstrap.min.js"></script>-->
-	
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/2.7.2/jquery.serializejson.min.js" type="text/javascript"></script> 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Zebra_datepicker/1.9.4/javascript/zebra_datepicker.js" type="text/javascript"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/smokejs/3.1.1/js/smoke.min.js" type="text/javascript"></script>
-	<script src="../../../resources/js/smokeValidator_PL.js" type="text/javascript"></script>
-	<script src="../../../resources/js/ckeditor.js" type="text/javascript"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment-with-locales.min.js"></script>
-	
-	<style>
-		
-	</style>
 	
 	<div class="container" fragment="content">
 	
@@ -67,36 +42,16 @@
 
 		
 	<!-- External JS Libraries -->
-	<script src="@{/resources/js/tabulator.js}" type="text/javascript"></script> 
-	<script src="@{/resources/js/common.js}" type="text/javascript"></script> 
-	<script src="@{/resources/js/PageScriptSchedule.js}" type="text/javascript"></script> 
-	
-	<!-- --
-	<script src="../../../resources/js/tabulator.js" type="text/javascript"></script> 
-	<script src="../../../resources/js/common.js" type="text/javascript"></script> 
-	<script src="../../../resources/js/PageScriptSchedule.js" type="text/javascript"></script> 
+	<script src="resources/js/PageScriptSchedule.js" type="text/javascript"></script> 
 	
 	<!-- -->
 	
 	<!-- Internal JS Code -->
 	<script type="text/javascript">
-			
-		var config = {};
-			
-		config.global = {
-			domainUrl : '@{/}',
-			//domainUrl : 'http://localhost/sopi/', //'@{/}',
-			resourcesUrl : '@{/resources/}',
-			//resourcesUrl : '../../../resources/', //'@{/resources/}',
-			elementsUrl: '@{/resources/template/element/}',
-			//elementsUrl: '../../../resources/template/element/'
-		}
-				
+							
 		$(document).ready(function(){
 		
-			// Nadpisz wybrane ustawienia skryptu common
-			SOPI_resourcesUrl = config.global.resourcesUrl;
-			SOPI_elementsUrl = config.global.elementsUrl;
+			$('title').html('Harmonogram');
 			
 			// [BETA] Wczynie ProfileDetailModal
 			SOPI_loadElement('ProfileDetailModal');		
@@ -104,9 +59,6 @@
 			SOPI_loadElement('StatusDetailModal');	
 			SOPI_loadElement('ScheduleCalendarCollapse');
 			SOPI_loadElement('ScheduleDetailModal');
-
-			// Nadpisz konfigurację w skrypcie Profile
-			pageScriptSchedule.global = config.global;
 									
 			// Dodaj filtry do tabulatorów
 			SOPI_filterTabulator($('#Slc'), $('#SlcFilterValue'), $('#SlcFilterReset'));

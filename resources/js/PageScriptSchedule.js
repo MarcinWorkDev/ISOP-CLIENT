@@ -3,45 +3,30 @@ var pageScriptSchedule = {
 	/******************************************************
 	/	Deklaracje	zmiennych
 	/*****************************************************/
-	
-	// zmienne globalne
-	global: {
-		domainUrl: '',
-		resourcesUrl: '',
-		elementsUrl: ''
-	},
 		
 	// wygenerowanie adresów obrazków
-	icons: function(){
-		
-		var global = this.global;
-				
-		var icons = {
-			avatarMaleIcon: '<img src="' + global.resourcesUrl + 'img/avatar_male.png" style="width: 20px;">',
-			avatarFemaleIcon:  '<img src="' + global.resourcesUrl + 'img/avatar_female.png" style="width: 20px;">',
-			avatarOtherIcon:  '<img src="' + global.resourcesUrl + 'img/avatar_other.png" style="width: 20px;">',
-			avatarMale: '<img src="' + global.resourcesUrl + 'img/avatarMale.png" style="width: 128px;">',
-			avatarFemale:  '<img src="' + global.resourcesUrl + 'img/avatarFemale.png" style="width: 128px;">',
-			avatarOther:  '<img src="' + global.resourcesUrl + 'img/avatarOther.png" style="width: 128px;">',
-			activeIcon:  '<img src="' + global.resourcesUrl + 'img/active.png" style="width: 18;">',
-			deleteIcon:  '<img src="' + global.resourcesUrl + 'img/delete.png" style="width: 20;">',
-			detailIcon:  '<img src="' + global.resourcesUrl + 'img/detail.png" style="width: 20;">',
-			editIcon:  '<img src="' + global.resourcesUrl + 'img/edit.png" style="width: 20;">',
-			userIcon:  '<img src="' + global.resourcesUrl + 'img/web_account.png" style="width: 20;">',
-			scheduleIcon: '<img src="' + global.resourcesUrl + 'img/schedule.png" style="width: 20;">',
-			scheduleIcon2: '<img src="' + global.resourcesUrl + 'img/schedule2.png" style="width: 20;">'
-		};
-		return icons;
+	icons: {
+		avatarMaleIcon: '<img src="' + SOPIconfig.resourcesUrl + 'img/avatar_male.png" style="width: 20px;">',
+		avatarFemaleIcon:  '<img src="' + SOPIconfig.resourcesUrl + 'img/avatar_female.png" style="width: 20px;">',
+		avatarOtherIcon:  '<img src="' + SOPIconfig.resourcesUrl + 'img/avatar_other.png" style="width: 20px;">',
+		avatarMale: '<img src="' + SOPIconfig.resourcesUrl + 'img/avatarMale.png" style="width: 128px;">',
+		avatarFemale:  '<img src="' + SOPIconfig.resourcesUrl + 'img/avatarFemale.png" style="width: 128px;">',
+		avatarOther:  '<img src="' + SOPIconfig.resourcesUrl + 'img/avatarOther.png" style="width: 128px;">',
+		activeIcon:  '<img src="' + SOPIconfig.resourcesUrl + 'img/active.png" style="width: 18;">',
+		deleteIcon:  '<img src="' + SOPIconfig.resourcesUrl + 'img/delete.png" style="width: 20;">',
+		detailIcon:  '<img src="' + SOPIconfig.resourcesUrl + 'img/detail.png" style="width: 20;">',
+		editIcon:  '<img src="' + SOPIconfig.resourcesUrl + 'img/edit.png" style="width: 20;">',
+		userIcon:  '<img src="' + SOPIconfig.resourcesUrl + 'img/web_account.png" style="width: 20;">',
+		scheduleIcon: '<img src="' + SOPIconfig.resourcesUrl + 'img/schedule.png" style="width: 20;">',
+		scheduleIcon2: '<img src="' + SOPIconfig.resourcesUrl + 'img/schedule2.png" style="width: 20;">'
 	},
 		
 	// konstruktor
 	_create: function(){
 				
 		console.log('SOPI PageScript for Schedule page loaded.');
-		
-		var self = this;
-		var global = self.global;
-		var icons = self.icons();
+
+		var icons = this.icons;
 		
 		/******************************************************
 		/	Funkcje obsługi onClick - dodanie eventów
@@ -57,7 +42,7 @@ var pageScriptSchedule = {
 			var scheduleId = $('#SdmDeleteButton').prop('scheduleId');
 			
 			SOPI_ajaxJson({
-				url: global.domainUrl + 'api/module/schedule/delete/' + scheduleId,
+				url: SOPIconfig.ajaxDomainUrl + 'api/module/schedule/delete/' + scheduleId,
 				method: 'DELETE',
 				contentType: "application/json; charset=utf-8",
 				record: scheduleId,
@@ -74,7 +59,8 @@ var pageScriptSchedule = {
 			
 		// Tabulator profili pracowników
 		$('#Slc').tabulator({
-		ajaxURL: global.domainUrl + 'api/module/profile/getPracownik',
+		ajaxURL: SOPIconfig.ajaxDomainUrl + 'api/module/profile/getPracownik',
+		ajaxHeaders: { "X-Auth-Token": sessionStorage.getItem('authtoken') },
 		index: 'profileId',
 		//fitColumns:true,
 		height: 300,
@@ -189,7 +175,7 @@ var pageScriptSchedule = {
 					
 					$('#SccCalendar').fullCalendar('removeEvents');
 					$('#SccCalendar').fullCalendar('removeEventSources');
-					var event = { url: global.domainUrl + 'api/module/schedule/event/get/pracownik/' + data.profileId };				
+					var event = { url: SOPIconfig.ajaxDomainUrl + 'api/module/schedule/event/get/pracownik/' + data.profileId };				
 					$('#SccCalendar').fullCalendar('addEventSource',event);
 					
 				}
@@ -242,7 +228,7 @@ var pageScriptSchedule = {
 					};
 					
 					SOPI_ajaxJson({
-						url: global.domainUrl + 'api/module/schedule/event/set',
+						url: SOPIconfig.ajaxDomainUrl + 'api/module/schedule/event/set',
 						method: 'POST',
 						data: JSON.stringify(data),
 						contentType: "application/json; charset=utf-8",

@@ -10052,6 +10052,7 @@ function EventManager(options) { // assumed to be a calendar
 				t.pushLoading();
 				$.ajax($.extend({}, ajaxDefaults, source, {
 					data: data,
+					headers: { "X-Auth-Token": sessionStorage.getItem('authtoken') },
 					success: function(events) {
 						events = events || [];
 						var res = applyAll(success, this, arguments);

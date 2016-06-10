@@ -8,7 +8,7 @@ var SOPIconfig = {
 	scriptUrl: location.origin + location.pathname + 'resources/js/',
 	templateUrl: location.origin + location.pathname + 'template/',
 	loginPage: 'pageLogin.html',
-	homePage: 'pageProfile.html'
+	homePage: 'pageHome.html'
 }
 
 // Logowanie zmian
@@ -31,16 +31,27 @@ $(document).ready(function(){
 		SOPI_userInfo = SOPI_getJson(SOPIconfig.ajaxDomainUrl + 'api/module/user/getLogged');
 		$('#userInfo').html(SOPI_userInfo.profile.nazwisko + ' ' + SOPI_userInfo.profile.imie + ' (' + SOPI_userInfo.username + ')');
 	} else {
-		$('#ctl').load(SOPIconfig.templateUrl + SOPIconfig.loginPage);
-		
-		if (sessionStorage.getItem('authtoken') && refreshToken() == false){
-			$('#alertBox').html('Twoja sesja wygasła.<br>Zaloguj sie ponownie.').show();
-		}
-		
+		$('#ctl').load(SOPIconfig.templateUrl + SOPIconfig.loginPage,function(){
+			if (sessionStorage.getItem('authtoken')){
+				$('#alertBox').html('Twoja sesja wygasła.<br>Zaloguj sie ponownie.').show();
+			}
+		});
+				
 		$('#userInfoBox').hide();
 	}
 	
 	$('.contentLoader').on('click',function(){
+		if (!sessionStorage.getItem('authtoken')) 
+		{  
+			location.reload();
+			return;
+		}
+		
+		if (refreshToken() == false){
+			location.reload();
+			return;
+		}
+		
 		page = $(this).attr('href');
 		loadFromHash(page);
 	});
@@ -51,7 +62,6 @@ $(document).ready(function(){
 	});
 		
 	function loadFromHash(page){
-		console.log(page);
 		
 		if (page.length > 1){
 			pageUrl = 'page' + page.substr(1,1).toUpperCase()+page.substr(2) + '.html';

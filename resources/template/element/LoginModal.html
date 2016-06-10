@@ -72,7 +72,7 @@
 			success: function(result){
 				alertBox.html('').hide();
 				sessionStorage.setItem('authtoken',result.token);
-				$('#SOPI_loginModal').hide();
+				$('#SOPI_loginModal').modal('hide');
 			},
 			error: function(xhr, resp, text){
 				alertBox.html('Wystąpił błąd.').show();

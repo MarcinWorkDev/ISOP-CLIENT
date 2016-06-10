@@ -2,12 +2,6 @@
 <HEAD>
 	<!-- META -->
 	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Użytkownicy</title>
-	<!-- CSS -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 </HEAD>
 <BODY>
 
@@ -118,38 +112,20 @@
 	<!--/////////////////////////////////////////////////-->
 		
 	<!-- External JS Libraries -->
-	<script src="@{/resources/js/tabulator.js}" type="text/javascript"></script> 
-	<script src="@{/resources/js/common.js}" type="text/javascript"></script> 
-	<script src="@{/resources/js/PageScriptUser.js}" type="text/javascript"></script> 
+	<script src="resources/js/PageScriptUser.js" type="text/javascript"></script> 
 	
 	<!-- Internal JS Code -->
 	<script type="text/javascript">
-			
-		var config = {};
-			
-		config.global = {
-			domainUrl : '[[@{/}]]',
-			//domainUrl : 'http://localhost/sopi/', //'[[@{/}]]',
-			resourcesUrl : '[[@{/resources/}]]',
-			//resourcesUrl : '../../../resources/', //'[[@{/resources/}]]',
-			elementsUrl: '[[@{/resources/template/element/}]]',
-			//elementsUrl: 'http://localhost/sopi/resources/template/element/'
-		}		
-			
+						
 		$(document).ready(function(){
 		
-			// Nadpisz wybrane ustawienia skryptu common
-			SOPI_resourcesUrl = config.global.resourcesUrl;
-			SOPI_elementsUrl = config.global.elementsUrl;
-			
+			$('title').html('Użytkownicy');
+
 			// [BETA] Wczynie ProfileDetailModal
 			SOPI_loadElement('DeleteConfirmModal');
 			SOPI_loadElement('ProfileDetailModal');
 			SOPI_loadElement('StatusContainer');
 			SOPI_loadElement('StatusDetailModal');
-		
-			// Nadpisz konfigurację w skrypcie User
-			pageScriptUser.global = config.global;
 						
 			// Dodaj filtry do tabulatorów
 			SOPI_filterTabulator($('#Ulc'), $('#UlcFilterValue'), $('#UlcFilterReset'));

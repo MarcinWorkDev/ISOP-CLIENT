@@ -3,42 +3,27 @@ var pageScriptUser = {
 	/******************************************************
 	/	Deklaracje	zmiennych
 	/*****************************************************/
-	
-	// zmienne globalne
-	global: {
-		domainUrl: '',
-		resourcesUrl: '',
-		elementsUrl: ''
-	},
 		
 	// wygenerowanie adresów obrazków
-	icons: function(){
-		
-		var global = this.global;
-				
-		var icons = {
-			avatarMaleIcon: '<img src="' + global.resourcesUrl + 'img/avatar_male.png" style="width: 20px;">',
-			avatarFemaleIcon:  '<img src="' + global.resourcesUrl + 'img/avatar_female.png" style="width: 20px;">',
-			avatarOtherIcon:  '<img src="' + global.resourcesUrl + 'img/avatar_other.png" style="width: 20px;">',
-			avatarMale: '<img src="' + global.resourcesUrl + 'img/avatarMale.png" style="width: 128px;">',
-			avatarFemale:  '<img src="' + global.resourcesUrl + 'img/avatarFemale.png" style="width: 128px;">',
-			avatarOther:  '<img src="' + global.resourcesUrl + 'img/avatarOther.png" style="width: 128px;">',
-			rolesIcon:  '<img src="' + global.resourcesUrl + 'img/roles.png" style="width: 20px;">',
-			activeIcon:  '<img src="' + global.resourcesUrl + 'img/active.png" style="width: 18;">',
-			deleteIcon:  '<img src="' + global.resourcesUrl + 'img/delete.png" style="width: 20;">',
-			userIcon:  '<img src="' + global.resourcesUrl + 'img/web_account.png" style="width: 20;">',
-		};
-		return icons;
+	icons: {
+		avatarMaleIcon: '<img src="' + SOPIconfig.resourcesUrl + 'img/avatar_male.png" style="width: 20px;">',
+		avatarFemaleIcon:  '<img src="' + SOPIconfig.resourcesUrl + 'img/avatar_female.png" style="width: 20px;">',
+		avatarOtherIcon:  '<img src="' + SOPIconfig.resourcesUrl + 'img/avatar_other.png" style="width: 20px;">',
+		avatarMale: '<img src="' + SOPIconfig.resourcesUrl + 'img/avatarMale.png" style="width: 128px;">',
+		avatarFemale:  '<img src="' + SOPIconfig.resourcesUrl + 'img/avatarFemale.png" style="width: 128px;">',
+		avatarOther:  '<img src="' + SOPIconfig.resourcesUrl + 'img/avatarOther.png" style="width: 128px;">',
+		rolesIcon:  '<img src="' + SOPIconfig.resourcesUrl + 'img/roles.png" style="width: 20px;">',
+		activeIcon:  '<img src="' + SOPIconfig.resourcesUrl + 'img/active.png" style="width: 18;">',
+		deleteIcon:  '<img src="' + SOPIconfig.resourcesUrl + 'img/delete.png" style="width: 20;">',
+		userIcon:  '<img src="' + SOPIconfig.resourcesUrl + 'img/web_account.png" style="width: 20;">',
 	},
 		
 	// konstruktor
 	_create: function(){
 				
 		console.log('SOPI PageScript for User page loaded.');
-		
-		var self = this;
-		var global = self.global;
-		var icons = self.icons();
+
+		var icons = this.icons;
 		
 		/******************************************************
 		/	Funkcje obsługi onClick - dodanie eventów
@@ -52,7 +37,7 @@ var pageScriptUser = {
 			$('#Dcm').modal('toggle');
 			
 			SOPI_ajaxJson({
-				url: global.domainUrl + 'api/module/user/delete/' + userId,
+				url: SOPIconfig.ajaxDomainUrl + 'api/module/user/delete/' + userId,
 				method: 'DELETE',
 				contentType: "application/json; charset=utf-8",
 				record: userId,
@@ -66,7 +51,7 @@ var pageScriptUser = {
 		
 		// Wczytanie listy profili bez użytkowników
 		$('#AucButton').on('click',function(){
-			$('#AucContainer').tabulator("setData", global.domainUrl + 'api/module/user/getAvailProfiles');
+			$('#AucContainer').tabulator("setData", SOPIconfig.ajaxDomainUrl + 'api/module/user/getAvailProfiles');
 		});
 		
 		// Dodanie użytkownika AJAX
@@ -83,7 +68,7 @@ var pageScriptUser = {
 				};
 				
 			SOPI_ajaxJson({
-				url: global.domainUrl + 'api/module/user/add',
+				url: SOPIconfig.ajaxDomainUrl + 'api/module/user/add',
 				method: 'POST',
 				contentType: "application/json; charset=utf-8",
 				data: JSON.stringify(data),
@@ -103,7 +88,7 @@ var pageScriptUser = {
 			var userId = $('#RlmContainer').attr('userId');
 			
 			SOPI_ajaxJson({
-				url: global.domainUrl + 'api/module/user/setUserRole/' + userId + '/' + selected,
+				url: SOPIconfig.ajaxDomainUrl + 'api/module/user/setUserRole/' + userId + '/' + selected,
 				method: 'POST',
 				contentType: "application/json; charset=utf-8",
 				record: userId,
@@ -121,6 +106,7 @@ var pageScriptUser = {
 		$('#RlmContainer').tabulator({
 			index: 'role',
 			fitColumns:true,
+			ajaxHeaders: { "X-Auth-Token": sessionStorage.getItem('authtoken') },
 			sortable: false,
 			height: 200,
 			columns: [
@@ -132,7 +118,7 @@ var pageScriptUser = {
 						userId = $('#RlmContainer').attr('userId');
 						
 						SOPI_ajaxJson({
-							url: global.domainUrl + 'api/module/user/deleteUserRole/' + userId + '/' + data.role,
+							url: SOPIconfig.ajaxDomainUrl + 'api/module/user/deleteUserRole/' + userId + '/' + data.role,
 							method: 'DELETE',
 							contentType: "application/json; charset=utf-8",
 							record: userId,
@@ -150,6 +136,7 @@ var pageScriptUser = {
 		// Tabulator dostępnych profili
 		$('#AucContainer').tabulator({
 			index: 'profileId',
+			ajaxHeaders: { "X-Auth-Token": sessionStorage.getItem('authtoken') },
 			fitColumns:true,
 			sortable: false,
 			height: 200,
@@ -215,13 +202,14 @@ var pageScriptUser = {
 		
 		// Tabulator użytkowników
 		$('#Ulc').tabulator({
-		ajaxURL: global.domainUrl + 'api/module/user/get',
+		ajaxURL: SOPIconfig.ajaxDomainUrl + 'api/module/user/get',
+		ajaxHeaders: { "X-Auth-Token": sessionStorage.getItem('authtoken') },
 		index: 'userId',
 		fitColumns:true,
 		rowEdit:function(id, data, row){
 			
 			SOPI_ajaxJson({
-				url: global.domainUrl + 'api/module/user/set/' + id,
+				url: SOPIconfig.ajaxDomainUrl + 'api/module/user/set/' + id,
 				method: 'PUT',
 				contentType: "application/json; charset=utf-8",
 				data: JSON.stringify(data),
@@ -348,7 +336,7 @@ var pageScriptUser = {
 				width: 120,
 				onClick: function(e, cell, value, data){
 												
-					$('#RlmContainer').tabulator("setData", global.domainUrl + 'api/module/user/getRoles/' + data.userId);
+					$('#RlmContainer').tabulator("setData", SOPIconfig.ajaxDomainUrl + 'api/module/user/getRoles/' + data.userId);
 					$('#RlmContainer').attr("userId",data.userId);
 										
 					var titleItem = $('#RlmTitle');							
@@ -361,7 +349,7 @@ var pageScriptUser = {
 					$('#RlmButton').prop('disabled', 'disabled');
 										
 					$.ajax({
-						url: global.domainUrl + 'api/module/user/getAvailRoles/' + $('#RlmContainer').attr('userId'),
+						url: SOPIconfig.ajaxDomainUrl + 'api/module/user/getAvailRoles/' + $('#RlmContainer').attr('userId'),
 						method: 'GET',
 						contentType: "application/json; charset=utf-8",
 						success: function(result) {
