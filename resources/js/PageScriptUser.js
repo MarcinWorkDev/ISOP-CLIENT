@@ -231,10 +231,17 @@ var pageScriptUser = {
 				width: 40
 			 },
 			 {
+				title: "Typ",
+				formatter(value, data, cell, row, options){
+					return data.profile.type;
+				},
+				width: 90
+			 },
+			 {
 				title: "Użytkownik",
 				field: "username",
 				editor: "input",
-				width: 120
+				width: 110
 			 },
 			 {
 				title: icons.activeIcon,
@@ -245,12 +252,6 @@ var pageScriptUser = {
 				width: 30
 			 },
 			 {
-				title: "Hasło aktualne",
-				field: "credentialsNonExpired",
-				formatter: "tickCross",
-				width: 80
-			 },
-			 {
 				title: "Email",
 				field: "email",
 				width: 180,
@@ -259,7 +260,7 @@ var pageScriptUser = {
 			 {
 				title: "Mobile",
 				field: "mobile",
-				width: 100,
+				width: 90,
 				formatter: function(value, data, cell, row, options, formatterParams){ return data.profile.mobile; }
 			 },					 
 			 {
@@ -351,6 +352,7 @@ var pageScriptUser = {
 					$.ajax({
 						url: SOPIconfig.ajaxDomainUrl + 'api/module/user/getAvailRoles/' + $('#RlmContainer').attr('userId'),
 						method: 'GET',
+						headers:{ "X-Auth-Token": sessionStorage.getItem('authtoken')},
 						contentType: "application/json; charset=utf-8",
 						success: function(result) {
 							$('#RlmRolesList').html('');
@@ -368,14 +370,14 @@ var pageScriptUser = {
 							});
 						},
 						error: function(xhr, resp, text) {
-							errorMessage = {id: id, errors: jQuery.parseJSON(xhr.responseText)};
+							errorMessage = {id: data.userId, errors: jQuery.parseJSON(xhr.responseText)};
 						}
 					});
 					
 					modal.modal("show");
 				},
 				formatter: function(value, data, cell, row, options, formatterParams){
-					return '<span class="btn-xs">' + icons.rolesIcon + 'Uprawnienia</span>';
+					return data.profile.type == "PACJENT" ? '' : '<span class="btn-xs">' + icons.rolesIcon + 'Uprawnienia</span>';
 				}
 			 },
 			 {

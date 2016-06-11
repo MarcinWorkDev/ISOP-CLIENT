@@ -8,7 +8,8 @@ var SOPIconfig = {
 	scriptUrl: location.origin + location.pathname + 'resources/js/',
 	templateUrl: location.origin + location.pathname + 'template/',
 	loginPage: 'pageLogin.html',
-	homePage: 'pageHome.html'
+	homePage: 'pageHome.html',
+	menuPage: 'menu.html'
 }
 
 // Logowanie zmian
@@ -20,6 +21,7 @@ var SOPI_globalUpdatesDoneError = 0;
 var SOPI_globalUpdates = [];
 
 var SOPI_userInfo;
+var SOPI_userInfoRoles;
 
 $(document).ready(function(){
 
@@ -29,7 +31,10 @@ $(document).ready(function(){
 		$('#userInfoBox').show();
 		
 		SOPI_userInfo = SOPI_getJson(SOPIconfig.ajaxDomainUrl + 'api/module/user/getLogged');
+		SOPI_userInfoRoles = SOPI_getJson(SOPIconfig.ajaxDomainUrl + 'api/module/user/getLoggedRoles');
 		$('#userInfo').html(SOPI_userInfo.profile.nazwisko + ' ' + SOPI_userInfo.profile.imie + ' (' + SOPI_userInfo.username + ')');
+				
+		$('#menuBar').load(SOPIconfig.domainUrl + 'menu/' + SOPIconfig.menuPage);
 	} else {
 		$('#ctl').load(SOPIconfig.templateUrl + SOPIconfig.loginPage,function(){
 			if (sessionStorage.getItem('authtoken')){
@@ -40,7 +45,7 @@ $(document).ready(function(){
 		$('#userInfoBox').hide();
 	}
 	
-	$('.contentLoader').on('click',function(){
+	$('#menuBar').on('click','.contentLoader',function(){
 		if (!sessionStorage.getItem('authtoken')) 
 		{  
 			location.reload();
@@ -68,9 +73,7 @@ $(document).ready(function(){
 		} else {
 			pageUrl = SOPIconfig.homePage;
 		}
-		
-		console.log(pageUrl);
-		
+				
 		$.ajax({
 			url: SOPIconfig.templateUrl + pageUrl,
 			type: "GET",

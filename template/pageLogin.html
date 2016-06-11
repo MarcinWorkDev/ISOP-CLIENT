@@ -86,7 +86,7 @@
 					alertBox.html('').hide();
 					successBox.html('Sesja zalogowana poprawnie.').show();
 					sessionStorage.setItem('authtoken',result.token);
-					location.reload();
+					location.replace(SOPIconfig.domainUrl);
 				},
 				error: function(xhr, resp, text){
 					alertBox.hide('Wystąpił błąd.');

@@ -1,0 +1,32 @@
+<style>
+.menuHide {
+	display: none;
+}
+</style>
+
+<li><a class="contentLoader" href="#">Strona główna</a></li>
+<li><a class="contentLoader menuHide" siterole="profile" href="#profile">Profile</a></li>
+<li><a class="contentLoader menuHide" siterole="user" href="#user">Użytkownicy</a></li>
+<li><a class="contentLoader menuHide" siterole="shedule" href="#schedule">Harmonogramy pracy</a></li>
+<li><a class="contentLoader menuHide" siterole="visit" href="#visit">Wizyty</a></li>
+
+<script>
+
+$('.menuHide').hide();
+
+$.each(SOPI_userInfoRoles,function(index,value){
+	if (value=='ADMIN'){
+		$('.menuHide').show();
+	} else {
+		var role = value.toLowerCase().replace('role_','');
+		$('.menuHide[siterole="' + role + '"]').each(function() {
+			$(this).show();
+		});
+	}
+});
+
+if (SOPI_userInfo.profile.type == 'PRACOWNIK'){
+	$('.menuHide[siterole="profile"]').show();
+}
+
+</script>

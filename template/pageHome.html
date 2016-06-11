@@ -5,5 +5,10 @@
 <body>
 	<h1>ISOP</h1>
 	<h2>Internetowy System Obsługi Pacjentów</h2>
-	<h3>Panel pracownika</h3>
+	<h3 id="welcome3">Panel pracownika</h3>
+
+	<script>
+		$('#welcome3').html('Witaj, ' + SOPI_userInfo.profile.imie + ' ' + SOPI_userInfo.profile.nazwisko + ' na stronach systemu ISOP!');
+	</script>
 </body>
+</html>
