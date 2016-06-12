@@ -20,7 +20,7 @@ var SOPI_globalUpdatesDoneSuccess = 0;
 var SOPI_globalUpdatesDoneError = 0; 
 var SOPI_globalUpdates = [];
 
-var SOPI_userInfo;
+var SOPI_userInfo = {};
 var SOPI_userInfoRoles;
 
 $(document).ready(function(){

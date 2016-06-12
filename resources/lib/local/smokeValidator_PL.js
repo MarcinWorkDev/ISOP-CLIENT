@@ -14,7 +14,8 @@
 	textSPassDefault : 'Wymagane minimum 4 znaki',
 	textSPassWeak    : 'Wymagane minimum 6 znaków',
 	textSPassMedium  : 'Wymagane minimum 6 znaków i liczba',
-	textSPassStrong  : 'Wymagane minimum 6 znaków, liczba oraz duża litera'
+	textSPassStrong  : 'Wymagane minimum 6 znaków, liczba oraz mała i duża litera',
+	textEqualPass: 'Podane hasła różnią się od siebie.'
   };
 
 }(jQuery));

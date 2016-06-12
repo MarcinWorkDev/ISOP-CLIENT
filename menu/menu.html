@@ -5,18 +5,22 @@
 </style>
 
 <li><a class="contentLoader" href="#">Strona główna</a></li>
-<li><a class="contentLoader menuHide" siterole="profile" href="#profile">Profile</a></li>
-<li><a class="contentLoader menuHide" siterole="user" href="#user">Użytkownicy</a></li>
-<li><a class="contentLoader menuHide" siterole="shedule" href="#schedule">Harmonogramy pracy</a></li>
-<li><a class="contentLoader menuHide" siterole="visit" href="#visit">Wizyty</a></li>
+<li><a class="contentLoader menuHide menuAdmin" siterole="profile" href="#profile">Profile</a></li>
+<li><a class="contentLoader menuHide menuAdmin" siterole="user" href="#user">Użytkownicy</a></li>
+<li><a class="contentLoader menuHide menuAdmin" siterole="schedule" href="#schedule">Harmonogramy pracy</a></li>
+<li><a class="contentLoader menuHide menuAdmin" siterole="visit" href="#visit">Wizyty</a></li>
+<li><a class="contentLoader" href="#myProfile">Mój profil</a></li>
+<li><a class="contentLoader menuHide" siterole="myVisit" href="#myVisit">Moje wizyty</a></li>
+<li><a class="contentLoader menuHide" siterole="mySchedule" href="#mySchedule">Mój harmonogram pracy</a></li>
+<li><a class="btn" id="changePassBtn">Zmień hasło</a></li>
 
 <script>
 
 $('.menuHide').hide();
 
 $.each(SOPI_userInfoRoles,function(index,value){
-	if (value=='ADMIN'){
-		$('.menuHide').show();
+	if (value=='ROLE_ADMIN'){
+		$('.menuAdmin').show();
 	} else {
 		var role = value.toLowerCase().replace('role_','');
 		$('.menuHide[siterole="' + role + '"]').each(function() {
@@ -27,6 +31,16 @@ $.each(SOPI_userInfoRoles,function(index,value){
 
 if (SOPI_userInfo.profile.type == 'PRACOWNIK'){
 	$('.menuHide[siterole="profile"]').show();
+	$('.menuHide[siterole="myVisit"]').show();
+	$('.menuHide[siterole="mySchedule"]').show();
 }
+
+if (SOPI_userInfo.profile.type == 'PACJENT'){
+	$('.menuHide[siterole="myVisit"]').show();
+}
+
+$('#changePassBtn').on('click',function(){
+	$('#SopiCpm').modal('show');
+});
 
 </script>

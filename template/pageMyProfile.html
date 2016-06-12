@@ -1,0 +1,212 @@
+<HTML>
+<HEAD>
+	<!-- META -->
+	<meta charset="utf-8">
+</HEAD>
+<BODY>
+
+	<div class="container" fragment="content">
+			
+	<!--/////////////////////////////////////////////////-->
+		
+	<!--------------------------------------------------------------------------------
+	-------  EditProfileCollapse (Epc)
+	-------  
+	------- # 
+	--------------------------------------------------------------------------------->
+	
+	<button id="EpcButton" class="btn btn-success" type="button" aria-expanded="false" aria-controls="Epc">Aktualizuj dane</button>
+	
+	<div class="collapse" id="Epc">
+	  <br>
+	  <div class="well">
+		<div class="alert alert-info" role="alert" id="EpcInfoEdit">
+			Użyj poniższego formularza aby zaktualizować profil.
+			<br><br>
+			Jeżeli istnieje konieczność wprowadzenia zmian w danych personalnych skontaktuj się z pracownikiem gabinetu.
+		</div>
+		<div class="alert alert-danger" role="alert" id="EpcAlert" style="display: none;">
+		</div>		
+		<form id="EpcForm" class="" style="max-width: 800px;" role="form">	
+			<hr>
+			<div class="row"><h3 class="col-sm-11 col-sm-offset-1">Dane adresowe</h3></div><hr>
+			<div class="row">
+				<div class="form-group col-sm-10 col-sm-offset-1 row">
+					<label for="EpcForm-">Ulica</label>
+					<div>
+						<input type="text" class="form-control" id="EpcForm-" name="ulica" placeholder="Ulica">
+						<div class="help-block with-errors"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row col-sm-offset-1">
+				<div class="form-group col-sm-4 row">
+					<label for="EpcForm-">Nr domu</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="EpcForm-" name="nrDomu" placeholder="Nr domu">
+						<div class="help-block with-errors"></div>
+					</div>
+				</div>
+				<div class="form-group col-sm-4 row">
+					<label for="EpcForm-">Nr mieszkania</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="EpcForm-" name="nrMieszkania" placeholder="Nr mieszkania">
+						<div class="help-block with-errors"></div>
+					</div>
+				</div>
+				<div class="form-group col-sm-4 row">
+					<label for="EpcForm-">Kod pocztowy</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="EpcForm-" data-smk-pattern="[0-9]{2}-[0-9]{3}" data-smk-msg="Podany kod pocztowy nie jest prawidłowy" name="kodPocztowy" placeholder="Kod pocztowy">
+						<div class="help-block with-errors"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-sm-10 col-sm-offset-1 row">
+					<label for="EpcForm-">Miejscowość</label>
+					<div>
+						<input type="text" class="form-control" id="EpcForm-" name="miejscowosc" placeholder="Miejscowość">
+						<div class="help-block with-errors"></div>
+					</div>
+				</div>
+			</div>
+			<hr><div class="row"><h3 class="col-sm-11 col-sm-offset-1">Dane kontaktowe</h3></div><hr>
+			<div class="row">
+				<div class="form-group col-sm-10 col-sm-offset-1 row">
+					<label for="EpcForm-">Adres email</label>
+					<div>
+						<input type="email" class="form-control" id="EpcForm-" name="email" placeholder="Adres email">
+						<div class="help-block with-errors"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row col-sm-offset-1">
+				<div class="form-group col-sm-6 row">
+					<label for="EpcForm-">Telefon komórkowy</label>
+					<div class="col-sm-10">
+						<input type="number" class="form-control" id="EpcForm-" name="mobile" data-smk-pattern="[1-9]{1}[0-9]{8}" data-smk-msg="<br><br>Podany numer telefonu nie jest prawidłowy (9 cyfr)" placeholder="Telefon komórkowy">
+						<div class="help-block with-errors smk-error-msg"></div>
+					</div>
+				</div>
+				<div class="form-group col-sm-6 row">
+					<label for="EpcForm-">Telefon dodatkowy</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="EpcForm-" name="numerDodatkowy" placeholder="Telefon dodatkowy">
+						<div class="help-block with-errors"></div>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="form-group row">
+				<a role="button" class="btn btn-success col-sm-2 col-sm-offset-1" id="EpcFormButton">Zapisz zmiany</a>
+				<a role="button" class="btn btn col-sm-2" id="EpcFormCancelButton">Anuluj</a>
+			</div>
+		</form>
+	  </div>
+	</div>
+	
+	<!--/////////////////////////////////////////////////-->
+	
+	<hr>
+	
+	<!--------------------------------------------------------------------------------
+	-------  
+	-------
+	------- 
+	--------------------------------------------------------------------------------->
+	
+	<div class="modal-body" id="PdmBody">
+	  
+		<table class="table table-bordered table-condensed">
+			<tr><td class="PdmDataRow" pdm-field="avatar"></td></tr>
+			<tr>
+			<td>
+			<b class="PdmDataRow" pdm-field="nazwisko"></b> 
+			<b class="PdmDataRow" pdm-field="imie"></b>
+			</td>
+			</tr>
+		</table>
+		<hr>
+		<div class="row">
+			<div class="col-md-6">
+				<table class="table table-bordered table-hover table-condensed">
+				<tbody>
+				<tr><td style="width: 200px;">Typ profilu</td><th class="PdmDataRow" pdm-field="type"></td></tr>
+				<tr><td style="width: 200px;">Pesel</td><th class="PdmDataRow" pdm-field="pesel"></td></tr>
+				<tr><td style="width: 200px;">Data urodzenia</td><th class="PdmDataRow" pdm-field="dataUrodzenia"></td></tr>
+				<tr><td style="width: 200px;">Płeć</td><th class="PdmDataRow" pdm-field="plecName"></td></tr>
+				</tbody>
+				</table>
+			</div>
+			<div class="col-md-6">
+				<table class="table table-bordered table-hover table-condensed">
+				<thead>
+				<tr><th colspan="2">Rejestracja w systemie</td></tr>
+				</thead>
+				<tbody>
+				<tr><td style="width: 200px;">Data rejestracji</td><th class="PdmDataRow" pdm-field="createdAt"></td></tr>
+				<tr><td style="width: 200px;">Użytkownik rejestrujący</td><th class="PdmDataRow" pdm-field="createdBy"></td></tr>
+				</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<table class="table table-bordered table-hover table-condensed">
+				<thead>
+				<tr><th colspan="2">Dane adresowe</td></tr>
+				</thead>
+				<tbody>
+				<tr><td style="width: 200px;">Ulica</td><th class="PdmDataRow" pdm-field="ulica"></td></tr>
+				<tr><td style="width: 200px;">Numer domu</td><th class="PdmDataRow" pdm-field="nrDomu"></td></tr>
+				<tr><td style="width: 200px;">Numer mieszkania</td><th class="PdmDataRow" pdm-field="nrMieszkania"></td></tr>
+				<tr><td style="width: 200px;">Kod pocztowy</td><th class="PdmDataRow" pdm-field="kodPocztowy"></td></tr>
+				<tr><td style="width: 200px;">Miejscowość</td><th class="PdmDataRow" pdm-field="miejscowosc"></td></tr>
+				</tbody>
+				</table>
+			</div>
+			<div class="col-md-6">
+				<table class="table table-bordered table-hover table-condensed">
+				<thead>
+				<tr><th colspan="2">Dane kontaktowe</td></tr>
+				</thead>
+				<tbody>
+				<tr><td style="width: 200px;">Telefon komórkowy</td><th class="PdmDataRow" pdm-field="mobile"></td></tr>
+				<tr><td style="width: 200px;">Telefon dodatkowy</td><th class="PdmDataRow" pdm-field="numerDodatkowy"></td></tr>
+				<tr><td style="width: 200px;">Adres email</td><th class="PdmDataRow" pdm-field="email"></td></tr>
+				</tbody>
+				</table>
+			</div>
+		</div>
+		<span class="PdmDataRow" pdm-field="userStatus"></span>
+	  </div>
+	
+	<!--/////////////////////////////////////////////////-->
+			
+	<!-- External JS Libraries -->
+	<script src="resources/js/PageScriptMyProfile.js" type="text/javascript"></script> 
+	
+	<!-- Internal JS Code -->
+	<script type="text/javascript">
+						
+		$(document).ready(function(){
+		
+			$('title').html('Mój profil');
+			
+			SOPI_loadElement('StatusContainer');
+			SOPI_loadElement('StatusDetailModal');
+			
+			// Uruchom skrypt Profile
+			pageScriptMyProfile._create();
+			
+			// Dodanie kalendarza do przycisków input=date2
+			SOPI_inputDateCalendar();
+						
+		});
+	
+	</script>
+	
+	</div>
+</BODY>
+</HTML>

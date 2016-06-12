@@ -1,4 +1,4 @@
-var pageScriptUser = {
+var pageScriptVisit = {
 	
 	/******************************************************
 	/	Deklaracje	zmiennych

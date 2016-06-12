@@ -94,9 +94,23 @@
 					button.attr('disabled',false);
 				},
 				statusCode: {
-					401: function() {
+					401: function(xhr, resp, text) {
 						alertBox.html('Podano błędną nazwę użytkownika lub hasło.').show();
 						successBox.hide();
+					},
+					403: function(xhr, resp, text){
+						var error = xhr.responseText;
+						if (error == '900'){
+							alertBox.html('Konto użytkownika jest zablokowane.<br>Skontaktuj się z obsługą gabinetu w celu odblokowania konta.').show();
+							successBox.hide();
+						} else if (error == '901') {
+							$('#SopiCpmButton').attr('userName',username.val());
+							$('#SopiCpmAlert').html('Zalogowałeś się przy użyciu jednorazowego hasła, lub Twoje aktualne hasło straciło ważność.<br><br>Użyj poniższego formularza aby utworzyć nowe hasło.');
+							$('#SopiCpm').modal('show');
+						} else {
+							alertBox.html('Brak dostępu do zasobu.').show();
+							successBox.hide();
+						}
 					}
 				}
 			});

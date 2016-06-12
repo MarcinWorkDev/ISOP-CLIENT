@@ -13,16 +13,7 @@
 	-------	# 
 	--------------------------------------------------------------------------------->
 	<div>
-		<div class="alert alert-info" role="alert">
-			<b>Uwaga, </b>dane widoczne w tabeli filtowane są także na podstawie zawartości profilu.
-		</div>	
-		<button id="SgcButton" class="btn btn-success col-md-2" type="button">Nowa wizyta</button>
-		<div class="input-group col-md-9 col-md-offset-3">
-			<input id="VlcFilterValue" type="text" class="form-control" placeholder="Szukana treść...">
-			<span class="input-group-btn">
-				<button id="VlcFilterReset" class="btn btn-danger" type="button">Wyczyść</button>
-			</span>
-		</div>
+		<button id="SgcButton" class="btn btn-success" type="button">Nowa wizyta</button>
 	</div>
 		
 	<!--/////////////////////////////////////////////////-->
@@ -44,8 +35,10 @@
 	-------
 	------- # Vlc
 	--------------------------------------------------------------------------------->
-	
-	<div id="Vlc"></div>
+	<h2>Wizyty planowane</h2>
+	<div id="VlcFuture" style="width: 855px;"></div>
+	<h2>Wizyty odbyte</h2>
+	<div id="VlcPast" style="width: 855px;"></div>
 	
 	<!--/////////////////////////////////////////////////-->
 	
@@ -85,7 +78,7 @@
 	<!--/////////////////////////////////////////////////-->
 		
 	<!-- External JS Libraries -->
-	<script src="resources/js/PageScriptVisit.js" type="text/javascript"></script> 
+	<script src="resources/js/PageScriptMyVisit.js" type="text/javascript"></script> 
 	
 	<!-- Internal JS Code -->
 	<script type="text/javascript">
@@ -96,22 +89,19 @@
 					
 			// [BETA] Wczynie ProfileDetailModal
 			SOPI_loadElement('DeleteConfirmModal');
-			SOPI_loadElement('ProfileDetailModal');
 			SOPI_loadElement('StatusContainer');
 			SOPI_loadElement('StatusDetailModal');
 			SOPI_loadElement('VisitDetailModal');
 			SOPI_loadElement('ScheduleGetCollapse');
 			SOPI_loadElement('ProfileGetModal');
-		
-			// Dodaj filtry do tabulatorów
-			SOPI_filterTabulator($('#Vlc'), $('#VlcFilterValue'), $('#VlcFilterReset'));
-			SOPI_filterTabulator($('#PgmContainer'), $('#PgmFilterValue'), $('#PgmFilterReset'));
-			
+			SOPI_loadElement('ProfileDetailModal');
+			SOPI_loadElement('VisitAddModal');
+					
 			// Uruchom skrypt User
-			pageScriptVisit._create();
+			pageScriptMyVisit._create();
 			
-			$('#Vlc').tabulator("setData");
-		
+			$('#VlcFuture').tabulator("setData");
+			$('#VlcPast').tabulator("setData");
 		});
 	
 	</script>

@@ -254,7 +254,6 @@ var pageScriptUser = {
 			 {
 				title: "Email",
 				field: "email",
-				width: 180,
 				formatter: function(value, data, cell, row, options, formatterParams){ return data.profile.email; }
 			 },
 			 {
@@ -262,20 +261,11 @@ var pageScriptUser = {
 				field: "mobile",
 				width: 90,
 				formatter: function(value, data, cell, row, options, formatterParams){ return data.profile.mobile; }
-			 },					 
-			 {
-				title: "Utworzony",
-				field: "createdAt",
-				width: 130
-			 },
-			 {
-				title: "Twórca",
-				field: "createdBy",
-				width: 120
-			 },
+			 },		
 			 {
 				title: "Profil",
 				field: "profile",
+				width: 200,
 				onClick: function(e, cell, value, data){
 					
 					var titleItem = $('#PdmTitle');						
@@ -378,6 +368,19 @@ var pageScriptUser = {
 				},
 				formatter: function(value, data, cell, row, options, formatterParams){
 					return data.profile.type == "PACJENT" ? '' : '<span class="btn-xs">' + icons.rolesIcon + 'Uprawnienia</span>';
+				}
+			 },
+			 {
+				title: "Hasło",
+				width: 120,
+				formatter: function(value, data, cell, row, options){
+					return '<span class="btn-xs">' + icons.rolesIcon + 'Resetuj hasło</span>';
+				},
+				onClick: function(e, cell, value, data){
+					var modal = $('#SopiRpm');
+					$('#SopiRpmButton').attr('userId',data.userId);
+					$('#SopiRpmUser').html(data.profile.nazwisko + ' ' + data.profile.imie + ' (' + data.username + ')');
+					modal.modal('show');
 				}
 			 },
 			 {
