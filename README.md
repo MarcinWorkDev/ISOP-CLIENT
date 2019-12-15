@@ -1,4 +1,4 @@
-<h1>ISOP - Internetowy System Obs≥ugi PacjentÛw</h2>
+<h1>ISOP - Internetowy System Obs≈Çugi Pacjent√≥w</h2>
 
-<h2>Projekt pracy dyplomowej - inøynier.</h2>
+<h2>Projekt pracy dyplomowej - in≈ºynier.</h2>
 <h3>JavaScript FrontEnd for REST Java Server</h3>
